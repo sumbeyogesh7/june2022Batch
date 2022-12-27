@@ -49,10 +49,9 @@ public class Calling
 
 		//error msg
 		//Object[] input7 = new Object[1];
-			input7[0]="//*[text()='Your username or password is incorrect']";
-			input7[1]="Your username or password is incorrect\r\n";
-					
-			SeleniumOperations.
-//input7[0]= 
+			//input7[0]="//*[text()='Your username or password is incorrect']";
+			//input7[1]="Your username or password is incorrect\r\n";		
+			//SeleniumOperations.
+		//input7[0]= 
 	}
 }

@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.rules.Timeout;
@@ -13,9 +14,9 @@ import org.openqa.selenium.interactions.Actions;
 public class SeleniumOperations 
 {
 	public static WebDriver driver = null;
-
+	public static Hashtable<String,Object> outputParameters=new Hashtable<String,Object>();
 	// browser launch
-	public static void browserLaunch(Object[] inputParameters) 
+	public static Hashtable<String,Object> browserLaunch(Object[] inputParameters) 
 	{
 		try{
 			
@@ -34,46 +35,67 @@ public class SeleniumOperations
 			driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 			driver.manage().window().maximize();
 		}
+			outputParameters.put("STATUS", "Fail");
+			outputParameters.put("MESSAGE", "Action:Browser launch,Input Given:"+inputParameters[0].toString());
+			
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Browser launch,Input Given:"+inputParameters[0].toString());
+			
 		}
+			return outputParameters;
 		}
 
 	// open application
-	public static void openApplication(Object[] inputParameters)
+	public static Hashtable<String,Object> openApplication(Object[] inputParameters)
 	{
 		try {
 			driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 		String strgurl = (String)inputParameters[0];
 		driver.get(strgurl);
 		
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "Action:Open Application,Input Given:"+inputParameters[0].toString());
+		
+		
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Open Application,Input Given:"+inputParameters[0].toString());
+			
 		}
+		return outputParameters;
 	}
 		
 
 	// clik
-	public static void clickOnElement(Object[] inputParameters) throws InterruptedException
+	public static Hashtable<String,Object> clickOnElement(Object[] inputParameters) throws InterruptedException
 	{
 		try {
 			driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 		String locator = (String) inputParameters[0];
+
 		driver.findElement(By.xpath(locator)).click();
 		Thread.sleep(5000);
+		
+		outputParameters.put("STATUS", "Pass");
+		outputParameters.put("MESSAGE", "Action:Click on Element,Input Given:"+inputParameters[0].toString());
+		
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Click on Element,Input Given:"+inputParameters[0].toString());
+			
 		}
+		return outputParameters;
 	}
 
 	// mouse over
-	public static void mouseOverAction(Object[] inputParameters)
+	public static Hashtable<String,Object> mouseOverAction(Object[] inputParameters)
 	{
 		try {
 			driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
@@ -81,29 +103,43 @@ public class SeleniumOperations
 		Actions act = new Actions(driver);
 		WebElement abc = driver.findElement(By.xpath(locator));
 		act.moveToElement(abc).build().perform();
+
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "Action:Mouse over on Element,Input Given:"+inputParameters[0].toString());
+		
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Mouse over on Element,Input Given:"+inputParameters[0].toString());
+			
 		}
+		return outputParameters;
 	}
 
 	// sendkeys
-	public static void sendText(Object[] inputParameters)
+	public static Hashtable<String,Object> sendText(Object[] inputParameters)
 	{
 		try {
 		String locator = (String) inputParameters[0];
 		String sendText = (String) inputParameters[1];
 		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 		driver.findElement(By.xpath(locator)).sendKeys(sendText);
+	
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "Action:Sendtext on Element,Input Given:"+inputParameters[0].toString());
+		
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Sendtext on Element,Input Given:"+inputParameters[0].toString());
+			
 		}
-		}
+		return outputParameters;
+	}
 
-	public static void validation(Object[]inputParameters)
+	public static Hashtable<String,Object> validation(Object[]inputParameters)
 	{
 		try {
 		 String xpath=(String) inputParameters[0];
@@ -113,20 +149,31 @@ public class SeleniumOperations
 	if(findText.equalsIgnoreCase(giventext))
 	{
 		System.out.println("Test case pass");
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "Action:Validation,Input Given:"+inputParameters[0].toString());
+		
 		
 	}
 	else
 	{
 		System.out.println("test case fail");
+		outputParameters.put("STATUS", "FAIL");
+		outputParameters.put("MESSAGE", "Action:Validation,Input Given:"+inputParameters[0].toString());
 		
 	}
+	
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "Action:Validation,Input Given:"+inputParameters[0].toString());
+			
 		}
+		return outputParameters;
 	
 	}
+	
+	/*
 	
 	public static void errorMsg(Object[] inputParameters)
 	{
@@ -146,4 +193,29 @@ public class SeleniumOperations
 		}
 	}
 	
+	public static void validationForInvaid(Object[]inputParameters)
+	{
+		try {
+		 String xpath=(String) inputParameters[0];
+		String giventext=(String) inputParameters[1];
+		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+	String findText =driver.findElement(By.xpath(xpath)).getText();
+	if(findText.equalsIgnoreCase(giventext))
+	{
+		System.out.println("Test case fail");
+		
+	}
+	else
+	{
+		System.out.println("test case pass");
+		
+	}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	
+	}
+*/	
 }

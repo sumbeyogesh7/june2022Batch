@@ -5,10 +5,10 @@ Given user enter url as "https://www.flipkart.com/"
 Given user cancel initial  login window
 
 @SmokeTest
-Scenario: login functionality with invalid credentials
+Scenario: login functionality with valid credentials
 When user naviagte on login tab
 When user click on my profile
-When user enter <username> as username 
-When user enter <passworld> as password
+When user enter "8999663205" as username 
+When user enter "yogesh" as password
 When user click on login button
-Then Applicaton shows appropriate error msg
+Then Applicaton shows user profile to user 
